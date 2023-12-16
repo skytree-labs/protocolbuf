@@ -3,5 +3,19 @@ syntax = "proto3";
 option go_package="./;gamefee_manager";
 package gamefee_manager.api;
 
-service GamefeeManager {
+message ReturnGameFeeRequest {
+    int64 chain_id = 1;
+    string token_address = 2;
+    string to = 3;
+    int64 amount = 4;
+    int64 cross_tx_id = 5;
+    int64 toss_id = 6;
+}
+
+message ReturnGameFeeResponse {
+}
+
+service GameFeeManager {
+    rpc ReturnGameFee (ReturnGameFeeRequest) returns (ReturnGameFeeResponse) {
+    }
 }
