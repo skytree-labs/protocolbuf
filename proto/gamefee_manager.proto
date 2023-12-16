@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option go_package="./;gamefee_manager";
+package gamefee_manager.api;
+
+service GamefeeManager {
+}

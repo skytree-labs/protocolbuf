@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+
+option go_package="./;skytree_backend";
+package skytree_backend.api;
+
+message Data {
+    Tx tx = 1;
+}
+
+message Tx {
+	string crossID = 1;
+	string bridgeID = 2;
+	string boolMonitoredTx = 3;
+	string boolVerifiedHash = 4;
+	string sourceChainID = 5;
+	string sourceTx = 6;
+	string destinationChainID = 7;
+	string destinationTx = 8;
+	string status = 9;
+	string txTimeOnChain = 10;
+	string messageType = 11;
+	bool   isOfficial = 12;
+}
+
+message GetCrossChainTxStatusRequest {
+    string which_bridge = 1;
+    string src_tx_hash = 2;
+}
+
+message GetCrossChainTxStatusResponse {
+    string code = 1; 
+    string msg = 2;
+    Data data = 3;
+    bool fail = 4;
+}
+
+service SkyteeBackend {
+    rpc GetCrossChainTxStatus (GetCrossChainTxStatusRequest) returns (GetCrossChainTxStatusResponse) {
+    }
+}
