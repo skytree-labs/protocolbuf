@@ -5,11 +5,10 @@ package gamefee_manager.api;
 
 message ReturnGameFeeRequest {
     int64 chain_id = 1;
-    string token_address = 2;
-    string to = 3;
-    int64 amount = 4;
-    int64 cross_tx_id = 5;
-    int64 toss_id = 6;
+    string to = 2;
+    int64 amount = 3;
+    int64 cross_tx_id = 4;
+    int64 toss_id = 5;
 }
 
 message ReturnGameFeeResponse {
