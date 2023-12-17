@@ -75,7 +75,8 @@ message OrderTxDetail {
 }
 
 message GetCrossChainTxDetailRequest {
-    string cross_id = 1;
+	string which_bridge = 1;
+    string cross_id = 2;
 }
 
 message GetCrossChainTxDetailResponse {
