@@ -42,10 +42,56 @@ message DepositPointRequest {
 message DepositPointResponse {
 }
 
+message BoolTxInfo {
+	string AuxiliaryHash = 1;
+	string BridgeID = 2;
+	string BridgeName = 3;
+	string CommitteeID = 4;
+	int64  CommitteeMemberNumber = 5;
+	string CommitteeName= 6;
+	int64  CommitteeThreshold = 7;
+	string Height = 8;
+	string Status = 9;
+	string TxHash = 10;
+	string TxTime = 11;
+}
+
+message TxInfo {
+	string Amount = 1;
+	string AnchorAddress = 2;
+	string ChainID = 3;
+	string Height = 4;
+	string Method = 5;
+	string Status = 6;
+	string Token = 7;
+	string TxHash = 8;
+	string TxTime = 9;
+}
+
+message OrderTxDetail {
+	repeated BoolTxInfo BoolTxInfos = 1;
+	TxInfo DestTxInfo = 2;
+	TxInfo SourceTxInfo = 3;
+}
+
+message GetCrossChainTxDetailRequest {
+    string cross_id = 1;
+}
+
+message GetCrossChainTxDetailResponse {
+    string code = 1; 
+    string msg = 2;
+    OrderTxDetail data = 3;
+    bool fail = 4;
+}
+
 service SkyteeBackend {
     rpc GetCrossChainTxStatus (GetCrossChainTxStatusRequest) returns (GetCrossChainTxStatusResponse) {
     }
 
+	rpc GetCrossChainTxDetail (GetCrossChainTxDetailRequest) returns (GetCrossChainTxDetailResponse) {
+    }
+	
 	rpc DepositPoint (DepositPointRequest) returns (DepositPointResponse) {
     }
 }

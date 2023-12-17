@@ -13,18 +13,7 @@ message ReturnGameFeeRequest {
 message ReturnGameFeeResponse {
 }
 
-message GetFeeDecimalRequest {
-    int64 chain_id = 1;
-}
-
-message GetFeeDecimalResponse {
-    int64 decimal = 1;
-}
-
 service GameFeeManager {
     rpc ReturnGameFee (ReturnGameFeeRequest) returns (ReturnGameFeeResponse) {
-    }
-
-    rpc GetFeeDecimal (GetFeeDecimalRequest) returns (GetFeeDecimalResponse) {
     }
 }
