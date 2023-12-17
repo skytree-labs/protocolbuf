@@ -35,7 +35,17 @@ message GetCrossChainTxStatusResponse {
     bool fail = 4;
 }
 
+message DepositPointRequest {
+    int64 cross_chain_tx_id = 1;
+}
+
+message DepositPointResponse {
+}
+
 service SkyteeBackend {
     rpc GetCrossChainTxStatus (GetCrossChainTxStatusRequest) returns (GetCrossChainTxStatusResponse) {
+    }
+
+	rpc DepositPoint (DepositPointRequest) returns (DepositPointResponse) {
     }
 }
