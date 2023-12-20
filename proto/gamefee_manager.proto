@@ -12,6 +12,7 @@ message ReturnGameFeeRequest {
 }
 
 message ReturnGameFeeResponse {
+    int64 status = 1;
 }
 
 service GameFeeManager {
