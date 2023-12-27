@@ -14,8 +14,23 @@ message ReturnGameFeeRequest {
 message ReturnGameFeeResponse {
     int64 status = 1;
 }
+message ClaimGameFeeRequest {
+    int64 chain_id = 1;
+    string account = 2;
+    int64 token = 3;
+    int64 amount = 4;
+    string tx_hash = 5;
+    string tx_time = 6;
+}
+
+message ClaimGameFeeResponse {
+    string code = 1;
+    string msg = 2;
+}
 
 service GameFeeManager {
     rpc ReturnGameFee (ReturnGameFeeRequest) returns (ReturnGameFeeResponse) {
+    }
+    rpc ClaimGameFee (ClaimGameFeeRequest) returns (ClaimGameFeeResponse) {
     }
 }
