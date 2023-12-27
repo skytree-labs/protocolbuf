@@ -17,8 +17,8 @@ message ReturnGameFeeResponse {
 message ClaimGameFeeRequest {
     int64 chain_id = 1;
     string account = 2;
-    int64 token = 3;
-    int64 amount = 4;
+    string token = 3;
+    string amount = 4;
     string tx_hash = 5;
     string tx_time = 6;
 }
