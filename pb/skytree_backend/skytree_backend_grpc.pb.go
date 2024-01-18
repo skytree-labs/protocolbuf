@@ -18,8 +18,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SkyteeBackendClient interface {
-	GetCrossChainTxStatus(ctx context.Context, in *GetCrossChainTxStatusRequest, opts ...grpc.CallOption) (*GetCrossChainTxStatusResponse, error)
-	GetCrossChainTxDetail(ctx context.Context, in *GetCrossChainTxDetailRequest, opts ...grpc.CallOption) (*GetCrossChainTxDetailResponse, error)
 	DepositPoint(ctx context.Context, in *DepositPointRequest, opts ...grpc.CallOption) (*DepositPointResponse, error)
 }
 
@@ -29,24 +27,6 @@ type skyteeBackendClient struct {
 
 func NewSkyteeBackendClient(cc grpc.ClientConnInterface) SkyteeBackendClient {
 	return &skyteeBackendClient{cc}
-}
-
-func (c *skyteeBackendClient) GetCrossChainTxStatus(ctx context.Context, in *GetCrossChainTxStatusRequest, opts ...grpc.CallOption) (*GetCrossChainTxStatusResponse, error) {
-	out := new(GetCrossChainTxStatusResponse)
-	err := c.cc.Invoke(ctx, "/skytree_backend.api.SkyteeBackend/GetCrossChainTxStatus", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *skyteeBackendClient) GetCrossChainTxDetail(ctx context.Context, in *GetCrossChainTxDetailRequest, opts ...grpc.CallOption) (*GetCrossChainTxDetailResponse, error) {
-	out := new(GetCrossChainTxDetailResponse)
-	err := c.cc.Invoke(ctx, "/skytree_backend.api.SkyteeBackend/GetCrossChainTxDetail", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *skyteeBackendClient) DepositPoint(ctx context.Context, in *DepositPointRequest, opts ...grpc.CallOption) (*DepositPointResponse, error) {
@@ -62,8 +42,6 @@ func (c *skyteeBackendClient) DepositPoint(ctx context.Context, in *DepositPoint
 // All implementations must embed UnimplementedSkyteeBackendServer
 // for forward compatibility
 type SkyteeBackendServer interface {
-	GetCrossChainTxStatus(context.Context, *GetCrossChainTxStatusRequest) (*GetCrossChainTxStatusResponse, error)
-	GetCrossChainTxDetail(context.Context, *GetCrossChainTxDetailRequest) (*GetCrossChainTxDetailResponse, error)
 	DepositPoint(context.Context, *DepositPointRequest) (*DepositPointResponse, error)
 	mustEmbedUnimplementedSkyteeBackendServer()
 }
@@ -72,12 +50,6 @@ type SkyteeBackendServer interface {
 type UnimplementedSkyteeBackendServer struct {
 }
 
-func (UnimplementedSkyteeBackendServer) GetCrossChainTxStatus(context.Context, *GetCrossChainTxStatusRequest) (*GetCrossChainTxStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCrossChainTxStatus not implemented")
-}
-func (UnimplementedSkyteeBackendServer) GetCrossChainTxDetail(context.Context, *GetCrossChainTxDetailRequest) (*GetCrossChainTxDetailResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCrossChainTxDetail not implemented")
-}
 func (UnimplementedSkyteeBackendServer) DepositPoint(context.Context, *DepositPointRequest) (*DepositPointResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DepositPoint not implemented")
 }
@@ -92,42 +64,6 @@ type UnsafeSkyteeBackendServer interface {
 
 func RegisterSkyteeBackendServer(s grpc.ServiceRegistrar, srv SkyteeBackendServer) {
 	s.RegisterService(&SkyteeBackend_ServiceDesc, srv)
-}
-
-func _SkyteeBackend_GetCrossChainTxStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCrossChainTxStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SkyteeBackendServer).GetCrossChainTxStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/skytree_backend.api.SkyteeBackend/GetCrossChainTxStatus",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SkyteeBackendServer).GetCrossChainTxStatus(ctx, req.(*GetCrossChainTxStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SkyteeBackend_GetCrossChainTxDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCrossChainTxDetailRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SkyteeBackendServer).GetCrossChainTxDetail(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/skytree_backend.api.SkyteeBackend/GetCrossChainTxDetail",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SkyteeBackendServer).GetCrossChainTxDetail(ctx, req.(*GetCrossChainTxDetailRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _SkyteeBackend_DepositPoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -155,14 +91,6 @@ var SkyteeBackend_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "skytree_backend.api.SkyteeBackend",
 	HandlerType: (*SkyteeBackendServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetCrossChainTxStatus",
-			Handler:    _SkyteeBackend_GetCrossChainTxStatus_Handler,
-		},
-		{
-			MethodName: "GetCrossChainTxDetail",
-			Handler:    _SkyteeBackend_GetCrossChainTxDetail_Handler,
-		},
 		{
 			MethodName: "DepositPoint",
 			Handler:    _SkyteeBackend_DepositPoint_Handler,
