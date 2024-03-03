@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package="./;liqudidity_pool_watcher";
+package liqudidity_pool_watcher.api;
+
+message PositionUpdatedRequest {
+    uint64 chain_id = 1;
+    uint64 pool_id = 2;
+    string lp_address = 3;
+    bool   is_increase = 4;
+    string amount = 5;
+}
+
+message PositionUpdatedResponse {
+	int64 status = 1;
+}
+
+service LiquidityPoolWatcher {
+	rpc PositionUpdated (PositionUpdatedRequest) returns (PositionUpdatedResponse) {
+    }
+}
