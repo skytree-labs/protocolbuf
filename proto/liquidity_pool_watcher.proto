@@ -9,6 +9,7 @@ message PositionUpdatedRequest {
     string lp_address = 3;
     bool   is_increase = 4;
     string amount = 5;
+    string position = 6;
 }
 
 message PositionUpdatedResponse {
