@@ -19,6 +19,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SkyteeBackendClient interface {
 	DepositPoint(ctx context.Context, in *DepositPointRequest, opts ...grpc.CallOption) (*DepositPointResponse, error)
+	ExchangePoint(ctx context.Context, in *ExchangePointRequest, opts ...grpc.CallOption) (*ExchangePointResponse, error)
+	OnTokenExchanged(ctx context.Context, in *OnTokenExchangedRequest, opts ...grpc.CallOption) (*OnTokenExchangedResponse, error)
 }
 
 type skyteeBackendClient struct {
@@ -38,11 +40,31 @@ func (c *skyteeBackendClient) DepositPoint(ctx context.Context, in *DepositPoint
 	return out, nil
 }
 
+func (c *skyteeBackendClient) ExchangePoint(ctx context.Context, in *ExchangePointRequest, opts ...grpc.CallOption) (*ExchangePointResponse, error) {
+	out := new(ExchangePointResponse)
+	err := c.cc.Invoke(ctx, "/skytree_backend.api.SkyteeBackend/ExchangePoint", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *skyteeBackendClient) OnTokenExchanged(ctx context.Context, in *OnTokenExchangedRequest, opts ...grpc.CallOption) (*OnTokenExchangedResponse, error) {
+	out := new(OnTokenExchangedResponse)
+	err := c.cc.Invoke(ctx, "/skytree_backend.api.SkyteeBackend/OnTokenExchanged", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SkyteeBackendServer is the server API for SkyteeBackend service.
 // All implementations must embed UnimplementedSkyteeBackendServer
 // for forward compatibility
 type SkyteeBackendServer interface {
 	DepositPoint(context.Context, *DepositPointRequest) (*DepositPointResponse, error)
+	ExchangePoint(context.Context, *ExchangePointRequest) (*ExchangePointResponse, error)
+	OnTokenExchanged(context.Context, *OnTokenExchangedRequest) (*OnTokenExchangedResponse, error)
 	mustEmbedUnimplementedSkyteeBackendServer()
 }
 
@@ -52,6 +74,12 @@ type UnimplementedSkyteeBackendServer struct {
 
 func (UnimplementedSkyteeBackendServer) DepositPoint(context.Context, *DepositPointRequest) (*DepositPointResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DepositPoint not implemented")
+}
+func (UnimplementedSkyteeBackendServer) ExchangePoint(context.Context, *ExchangePointRequest) (*ExchangePointResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExchangePoint not implemented")
+}
+func (UnimplementedSkyteeBackendServer) OnTokenExchanged(context.Context, *OnTokenExchangedRequest) (*OnTokenExchangedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnTokenExchanged not implemented")
 }
 func (UnimplementedSkyteeBackendServer) mustEmbedUnimplementedSkyteeBackendServer() {}
 
@@ -84,6 +112,42 @@ func _SkyteeBackend_DepositPoint_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SkyteeBackend_ExchangePoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExchangePointRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkyteeBackendServer).ExchangePoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/skytree_backend.api.SkyteeBackend/ExchangePoint",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkyteeBackendServer).ExchangePoint(ctx, req.(*ExchangePointRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SkyteeBackend_OnTokenExchanged_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OnTokenExchangedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkyteeBackendServer).OnTokenExchanged(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/skytree_backend.api.SkyteeBackend/OnTokenExchanged",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkyteeBackendServer).OnTokenExchanged(ctx, req.(*OnTokenExchangedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SkyteeBackend_ServiceDesc is the grpc.ServiceDesc for SkyteeBackend service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +158,14 @@ var SkyteeBackend_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DepositPoint",
 			Handler:    _SkyteeBackend_DepositPoint_Handler,
+		},
+		{
+			MethodName: "ExchangePoint",
+			Handler:    _SkyteeBackend_ExchangePoint_Handler,
+		},
+		{
+			MethodName: "OnTokenExchanged",
+			Handler:    _SkyteeBackend_OnTokenExchanged_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

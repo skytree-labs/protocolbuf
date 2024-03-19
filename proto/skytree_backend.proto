@@ -12,7 +12,35 @@ message DepositPointResponse {
 	int64 status = 1;
 }
 
+message ExchangePointRequest {
+    string token_amount = 1;
+    string user = 2;
+    string claim_tx = 3;
+    int64  claim_time = 4;
+}
+
+message ExchangePointResponse {
+    string code = 1;
+    string msg = 2;
+}
+
+message OnTokenExchangedRequest {
+    string token_amount = 1;
+    string user = 2;
+    string claim_tx = 3;
+    int64  claim_time = 4;
+}
+
+message OnTokenExchangedResponse {
+    string code = 1;
+    string msg = 2;
+}
+
 service SkyteeBackend {
 	rpc DepositPoint (DepositPointRequest) returns (DepositPointResponse) {
+    }
+    rpc ExchangePoint (ExchangePointRequest) returns (ExchangePointResponse) {
+    }
+    rpc OnTokenExchanged (OnTokenExchangedRequest) returns (OnTokenExchangedResponse) {
     }
 }
