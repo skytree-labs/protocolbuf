@@ -3,6 +3,12 @@ syntax = "proto3";
 option go_package="./;gamefee_manager";
 package gamefee_manager.api;
 
+enum ExchangeType
+{
+    POINT_TO_TOKEN = 0;
+    TOKEN_TO_POINT = 1;
+}
+
 message ReturnGameFeeRequest {
     int64 chain_id = 1;
     string to = 2;
@@ -14,6 +20,7 @@ message ReturnGameFeeRequest {
 message ReturnGameFeeResponse {
     int64 status = 1;
 }
+
 message ClaimGameFeeRequest {
     int64 chain_id = 1;
     string account = 2;
@@ -28,9 +35,44 @@ message ClaimGameFeeResponse {
     string msg = 2;
 }
 
+message ExchangeRequest {
+    string token_amount = 1;
+    string point_amount = 2;
+    string rate = 3;
+    string user = 4;
+    string push_tx = 5;
+    int64  push_time = 6;
+    string claim_tx = 7;
+    int64  claim_time = 8;
+    ExchangeType direct = 9;
+}
+
+message ExchangeResponse {
+    string code = 1;
+    string msg = 2;
+}
+
+message OnTokenExchangedRequest {
+    string token_amount = 1;
+    string point_amount = 2;
+    string rate = 3;
+    string user = 4;
+    string claim_tx = 5;
+    int64  claim_time = 6;
+}
+
+message OnTokenExchangedResponse {
+    string code = 1;
+    string msg = 2;
+}
+
 service GameFeeManager {
     rpc ReturnGameFee (ReturnGameFeeRequest) returns (ReturnGameFeeResponse) {
     }
     rpc ClaimGameFee (ClaimGameFeeRequest) returns (ClaimGameFeeResponse) {
+    }
+    rpc Exchange (ExchangeRequest) returns (ExchangeResponse) {
+    }
+    rpc OnTokenExchanged (OnTokenExchangedRequest) returns (OnTokenExchangedResponse) {
     }
 }
