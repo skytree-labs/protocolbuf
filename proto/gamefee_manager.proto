@@ -36,9 +36,9 @@ message ClaimGameFeeResponse {
 }
 
 message ExchangeRequest {
-    string token_amount = 1;
-    string point_amount = 2;
-    string rate = 3;
+    float  token_amount = 1;
+    float  point_amount = 2;
+    float  rate = 3;
     string user = 4;
     string push_tx = 5;
     int64  push_time = 6;
@@ -53,9 +53,9 @@ message ExchangeResponse {
 }
 
 message OnTokenExchangedRequest {
-    string token_amount = 1;
-    string point_amount = 2;
-    string rate = 3;
+    float  token_amount = 1;
+    float  point_amount = 2;
+    float  rate = 3;
     string user = 4;
     string claim_tx = 5;
     int64  claim_time = 6;
