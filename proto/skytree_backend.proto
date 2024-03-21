@@ -29,6 +29,7 @@ message OnTokenExchangedRequest {
     string user = 2;
     string claim_tx = 3;
     int64  claim_time = 4;
+    repeated int64 user_data = 5;
 }
 
 message OnTokenExchangedResponse {
