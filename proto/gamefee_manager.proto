@@ -38,14 +38,13 @@ message ClaimGameFeeResponse {
 message ExchangeRequest {
     int64  point_id = 1;
     double token_amount = 2;
-    double point_amount = 3;
-    double rate = 4;
-    string user = 5;
-    string push_tx = 6;
-    int64  push_time = 7;
-    string claim_tx = 8;
-    int64  claim_time = 9;
-    ExchangeType direct = 10;
+    double rate = 3;
+    string user = 4;
+    string push_tx = 5;
+    int64  push_time = 6;
+    string claim_tx = 7;
+    int64  claim_time = 8;
+    ExchangeType direct = 9;
 }
 
 message ExchangeResponse {
