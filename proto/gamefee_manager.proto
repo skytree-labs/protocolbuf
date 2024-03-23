@@ -54,12 +54,10 @@ message ExchangeResponse {
 }
 
 message OnTokenExchangedRequest {
-    double token_amount = 1;
-    double point_amount = 2;
-    double rate = 3;
-    string user = 4;
-    string claim_tx = 5;
-    int64  claim_time = 6;
+    string user = 1;
+    string claim_tx = 2;
+    int64  claim_time = 3;
+    repeated int32 ids = 4;
 }
 
 message OnTokenExchangedResponse {
